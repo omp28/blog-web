@@ -20,10 +20,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
-  return NextResponse.json(
-    { message: "Hello World and high" },
-    { status: 200 }
-  );
+  return NextResponse.json({ name: "omm bhai " }, { status: 200 });
 }
 
 export async function POST(request) {

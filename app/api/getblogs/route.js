@@ -19,7 +19,6 @@ import * as fs from "fs/promises";
 export async function GET(request) {
   try {
     console.log("aakash");
-    // console.log("Request Object:", request);
 
     // Print the search parameter
     console.log("Search Parameters:", request.query);
@@ -27,7 +26,6 @@ export async function GET(request) {
     // Parse query parameters from the URL
     const queryParams = request.nextUrl.searchParams;
     const slug = queryParams.get("slug");
-    console.log("Slug:", slug);
     // Check if slug is missing
     if (!slug) {
       console.error("Error: Slug is missing from the request");
@@ -36,8 +34,6 @@ export async function GET(request) {
         { status: 400 }
       );
     }
-
-    console.log("Slug:", slug);
 
     const filePath = `blogdata/${slug}.json`;
 
@@ -55,44 +51,3 @@ export async function GET(request) {
 export async function POST(request) {
   return NextResponse.json({ message: "Hello World" }, { status: 200 });
 }
-// **************************************
-
-// import { NextResponse } from "next/server";
-// import * as fs from "fs/promises";
-
-// export async function GET(request) {
-//   try {
-//     console.log("aakash");
-
-//     // Print the search parameters
-//     console.log("Search Parameters:", request.query);
-
-//     // Parse query parameters from the URL
-//     const slug = request.query.slug;
-//     console.log("Slug:", slug);
-
-//     // Check if slug is missing
-//     if (!slug) {
-//       console.error("Error: Slug is missing from the request");
-//       return NextResponse.json(
-//         { error: "Slug is missing from the request" },
-//         { status: 400 }
-//       );
-//     }
-
-//     const filePath = `blogdata/${slug}.json`;
-
-//     const fileContent = await fs.readFile(filePath, "utf-8");
-
-//     const blogData = JSON.parse(fileContent);
-
-//     return NextResponse.json(blogData, { status: 200 });
-//   } catch (err) {
-//     console.error("Error:", err);
-//     return NextResponse.json({ error: "No such blog found" }, { status: 500 });
-//   }
-// }
-
-// export async function POST(request) {
-//   return NextResponse.json({ message: "Hello World" }, { status: 200 });
-// }

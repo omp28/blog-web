@@ -3,19 +3,13 @@ import { useRouter } from "next/navigation";
 import Navbar from "../../component/Navbar";
 import React, { useState, useEffect } from "react";
 
-const BlogPost = () => {
+const BlogPost = ({ params: { slug } }) => {
   const [blogs, setBlogs] = useState();
   const router = useRouter();
+  console.log(slug);
 
   useEffect(() => {
-    // Check if router is not ready or query is not available yet
-    if (!router.isReady || !router.query) {
-      return;
-    }
-
-    const slug = router.query.slug;
-
-    fetch(`/api/getblog?slug=${slug}`)
+    fetch(`/api/getblogs?slug=${slug}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -29,12 +23,9 @@ const BlogPost = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [router.isReady, router.query]);
+  }, []);
 
   // Check if router is not ready or query is not available yet
-  if (!router.isReady || !router.query) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <main>

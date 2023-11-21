@@ -25,7 +25,7 @@ export async function GET(request) {
     console.log("Search Parameters:", request.query);
 
     // Parse query parameters from the URL
-    const queryParams = new URLSearchParams(request.url.search);
+    const queryParams = request.nextUrl.searchParams;
     const slug = queryParams.get("slug");
     console.log("Slug:", slug);
     // Check if slug is missing

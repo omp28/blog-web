@@ -2,17 +2,26 @@ import { NextResponse } from "next/server";
 import * as fs from "fs/promises";
 
 export async function GET(request) {
-  // next 2 line dont know what is doing
   const queryParams = new URL(request.url).searchParams;
   const slug = queryParams.get("slug");
 
   try {
-    const data = await fs.readFile(`blogdata/${slug}.json`, "utf8");
-    console.log("Data:", JSON.parse(data));
-    return NextResponse.json(JSON.parse(data), { status: 200 });
+    const data = await fs.readdir("blogdata");
+    // data returns file name
+    let allBlogData = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
+      const filePath = `blogdata/${item}`;
+
+      const fileContent = await fs.readFile(filePath, "utf-8");
+
+      allBlogData.push(JSON.parse(fileContent));
+    }
+    return NextResponse.json(allBlogData, { status: 200 });
   } catch (err) {
-    console.log("No such Page Found:", err.message);
-    return NextResponse.json({ error: "No such Page Found:" }, { status: 500 });
+    console.error("Error:", err);
+    return NextResponse.json({ error: "No such Page Found" }, { status: 500 });
   }
 }
 

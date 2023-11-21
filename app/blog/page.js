@@ -3,21 +3,21 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Navbar from "../component/Navbar";
 
-const Page = () => {
+const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("/api/getblogs")
-      // using .then to get the data from the api
-      .then((a) => {
-        return a.json();
-      })
-      // using 2nd time .then to parse the data
+    fetch("/api/blogs")
+      .then((response) => response.json())
       .then((parsed) => {
         console.log(parsed);
         setBlogs(parsed);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
+
   return (
     <>
       <Navbar />
@@ -31,7 +31,7 @@ const Page = () => {
                 </h1>
               </Link>
               <p>{blogItem.content.substr(0, 220)} ........</p>
-              <p>Author :"{blogItem.author}"</p>
+              <p>Author: {blogItem.author}</p>
             </div>
           ))}
         </div>
@@ -40,4 +40,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Blogs;
